@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+    <title>Socratic Teaching Assistant</title>
+</head>
+<body>
+    <h1>Learn Sorting Algorithms with AI</h1>
+    <div id="question-box">
+        <p id="question">Press start to get the first question!</p>
+        <input type="text" id="answer" placeholder="Type your answer here">
+        <button onclick="submitAnswer()">Submit</button>
+        <p id="feedback"></p>
+    </div>
+
+    <button onclick="startLesson()">Start Lesson</button>
+
+    <script>
+        let currentQuestionId = 1;
+
+        function startLesson() {
+            fetch('/ask', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ question_id: currentQuestionId, answer: null })
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.error) {
+                    document.getElementById('feedback').textContent = data.error;
+                } else {
+                    document.getElementById('question').textContent = data.question;
+                    document.getElementById('feedback').textContent = '';  // Clear feedback
+                }
+            });
+        }
+
+        
+        function submitAnswer() {
+        const answer = document.getElementById('answer').value;
+        fetch('/ask', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ question_id: currentQuestionId, answer: answer })
+        })
+        .then(response => response.json())
+        .then(data => {
+            document.getElementById('feedback').textContent = data.result;
+            if (data.next_question) {
+                currentQuestionId = data.next_question;
+                document.getElementById('question').textContent = data.question;
+                document.getElementById('answer').value = '';  // Clear the answer field after a correct answer
+            } else if (data.result === "Correct! No more questions!") {
+                document.getElementById('question').textContent = "Congratulations! You've completed the quiz!";
+                document.getElementById('answer').value = '';  // Clear the answer field at the end as well
+            }
+        });
+        }
+
+    </script>
+</body>
+</html>

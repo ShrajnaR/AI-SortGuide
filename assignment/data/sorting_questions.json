@@ -1,0 +1,42 @@
+{
+    "1": {
+        "question": "What is the time complexity of Merge Sort?",
+        "hints": [
+            "Merge Sort is a divide-and-conquer algorithm.",
+            "Think about how many comparisons are made during merging."
+        ],
+        "answer": "O(n log n)"
+    },
+    "2": {
+        "question": "Why is Quick Sort often faster in practice than Merge Sort?",
+        "hints": [
+            "Consider the typical number of comparisons in Quick Sort.",
+            "Quick Sort works well with small datasets and in-place sorting."
+        ],
+        "answer": "Because Quick Sort's average-case performance is good and it sorts in place."
+    },
+    "3": {
+        "question": "What is the worst-case time complexity of Quick Sort?",
+        "hints": [
+            "What happens when the pivot is poorly chosen?",
+            "Consider the case of already sorted data."
+        ],
+        "answer": "O(n^2)"
+    },
+    "4": {
+        "question": "Which sorting algorithm is stable: Merge Sort or Quick Sort?",
+        "hints": [
+            "A stable sort preserves the relative order of elements with equal keys.",
+            "Think about how Merge Sort merges arrays."
+        ],
+        "answer": "Merge Sort"
+    },
+    "5": {
+        "question": "What is the key idea behind Bubble Sort?",
+        "hints": [
+            "Consider how adjacent elements are compared.",
+            "Elements bubble up to their correct position."
+        ],
+        "answer": "Repeatedly swapping adjacent elements if they are in the wrong order."
+    }
+}
